@@ -70,7 +70,7 @@ server <- function(input, output) {
   
   output$bodyMass_dataTable <- DT::renderDataTable(DT::datatable(
     penguins,
-    caption = "hello",
+    caption = "table contains all data",
     options = list(pageLength = 5)
   ))
   
