@@ -2,6 +2,7 @@
 library(shiny)
 library(palmerpenguins)
 library(tidyverse)
+library(DT)
 
 # user interface ----
 ui <- fluidPage(# app title ----
@@ -16,7 +17,11 @@ ui <- fluidPage(# app title ----
                             min = 2700, max = 6300, value = c(3000, 4000)), 
                 
                 # body mass output ----
-                plotOutput(outputId = "bodyMass_scatterPlot")
+                shiny::plotOutput(outputId = "bodyMass_scatterPlot"), 
+                
+                # body mass table output ----
+                DT::dataTableOutput(outputId = "bodyMass_dataTable")
+                
                 )
 
 # break ----
@@ -50,8 +55,15 @@ server <- function(input, output){
         x = "Flipper length (mm)", 
         y = "Bill length (mm)"
       )
-    
   })
+  
+  output$bodyMass_dataTable <- DT::renderDataTable(
+    DT::datatable(penguins, 
+                  caption = "hello", 
+                  options = list(
+                    pageLength = 5
+                  ))
+  )
   
 }
 
